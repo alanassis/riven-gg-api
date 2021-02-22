@@ -1,7 +1,16 @@
-const routes = require("express").Router();
+const router = require("express").Router();
 
-routes.get("/", (req, res) => {
-  res.send("Hello World =D");
+// Status
+
+router.get("/", (req, res) => {
+  return res.status(200).send("Ok");
 });
 
-module.exports = routes;
+// Routes
+const profileRoutes = require("./routes/profile.routes");
+
+router.use("/profile", profileRoutes);
+
+// Export
+
+module.exports = router;
