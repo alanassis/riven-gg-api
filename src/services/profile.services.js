@@ -5,7 +5,7 @@ const lolApi = new LolApi(process.env.RIOT_KEY);
 module.exports = {
   async getByNick(nick) {
     if (nick.length < 3 || nick.length > 16)
-      throwError("Nome de invocador inválido");
+      throwError("Nome de invocador inválido", 400);
 
     const summoner = await lolApi.Summoner.getByName(
       nick,
