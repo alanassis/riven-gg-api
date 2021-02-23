@@ -3,16 +3,27 @@ module.exports = {
     try {
       return await func();
     } catch (error) {
-      return res.status(400).json({
-        code: error.code,
+      const errorMessage = {
+        status: error.status || 0,
         message: error.message,
-      });
+      };
+
+      switch (error.status) {
+        case 404:
+          errorMessage.message = "Invocador não encontrado";
+          break;
+        default:
+          errorMessage.message = "Serviço indisponível";
+          break;
+      }
+
+      return res.status(400).json(errorMessage);
     }
   },
 
-  throwError(message, code = "") {
+  throwError(message, status = "") {
     throw {
-      code: code || 0,
+      status: status || 0,
       message,
     };
   },
