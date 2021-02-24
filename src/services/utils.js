@@ -3,6 +3,8 @@ module.exports = {
     try {
       return await func();
     } catch (error) {
+      console.log(error.message);
+
       const errorMessage = {
         status: error.status || 0,
         message: error.message,
