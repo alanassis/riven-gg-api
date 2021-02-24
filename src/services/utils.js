@@ -1,4 +1,5 @@
-const { Constants } = require("twisted");
+const { LolApi } = require("twisted");
+const lolApi = new LolApi(process.env.RIOT_KEY);
 
 function throwError(message, status) {
   throw {
@@ -27,23 +28,14 @@ module.exports = {
     }
   },
 
-  throwError,
-
-  isNickValid(nick) {
+  async getSummonerId(nick, region) {
     if (nick.length < 3 || nick.length > 16)
       throwError("Nome de invocador inválido", 400);
+
+    const summoner = await lolApi.Summoner.getByName(nick, region);
+
+    return summoner.response;
   },
 
-  getRegion(region) {
-    let selectedRegion;
-    for (let i in Constants.Regions) {
-      if (region.toLocaleLowerCase() === i.toLocaleLowerCase()) {
-        selectedRegion = i;
-      }
-    }
-
-    if (!selectedRegion) throwError("Região inválida", 400);
-
-    return selectedRegion;
-  },
+  throwError,
 };
