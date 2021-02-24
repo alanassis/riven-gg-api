@@ -10,9 +10,11 @@ routes.get("/", (req, res) => {
 
 // Routes
 
-routes.get("/:nick", async (req, res) => {
+routes.get("/:region/:nick", async (req, res) => {
   return await safeAsync(res, async () => {
-    return res.json(await services.getByNick(req.params.nick));
+    return res.json(
+      await services.getByNick(req.params.region, req.params.nick)
+    );
   });
 });
 

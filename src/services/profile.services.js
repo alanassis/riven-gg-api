@@ -3,19 +3,29 @@ const { throwError } = require("./utils");
 const lolApi = new LolApi(process.env.RIOT_KEY);
 
 module.exports = {
-  async getByNick(nick) {
+  async getByNick(region, nick) {
     if (nick.length < 3 || nick.length > 16)
       throwError("Nome de invocador inválido", 400);
 
-    const summoner = await lolApi.Summoner.getByName(
-      nick,
-      Constants.Regions.BRAZIL
-    );
+    let selectedRegion;
+    for (let i in Constants.Regions) {
+      if (region.toLocaleLowerCase() === i.toLocaleLowerCase()) {
+        selectedRegion = i;
+      }
+    }
+
+    if (!selectedRegion) throwError("Região inválida", 400);
+
+    const summoner = (await lolApi.Summoner.getByName(nick, selectedRegion))
+      .response;
+
+    const currentPatch = (await lolApi.DataDragon.getVersions())[0];
+    const iconLink = `http://ddragon.leagueoflegends.com/cdn/${currentPatch}/img/profileicon/${summoner.profileIconId}.png`;
 
     return {
-      nickname: summoner.response.name,
-      level: summoner.response.summonerLevel,
-      profileIconId: summoner.response.profileIconId,
+      nickname: summoner.name,
+      level: summoner.summonerLevel,
+      profileIcon: iconLink,
     };
   },
 };
