@@ -1,3 +1,5 @@
+const { Constants } = require("twisted");
+
 module.exports = {
   async safeAsync(res, func) {
     try {
@@ -23,5 +25,23 @@ module.exports = {
       status: status || 0,
       message,
     };
+  },
+
+  isNickValid(nick) {
+    if (nick.length < 3 || nick.length > 16)
+      throwError("Nome de invocador inválido", 400);
+  },
+
+  getRegion(region) {
+    let selectedRegion;
+    for (let i in Constants.Regions) {
+      if (region.toLocaleLowerCase() === i.toLocaleLowerCase()) {
+        selectedRegion = i;
+      }
+    }
+
+    if (!selectedRegion) throwError("Região inválida", 400);
+
+    return selectedRegion;
   },
 };
