@@ -14,6 +14,7 @@ module.exports = {
 
     return {
       id: summoner.id,
+      region,
       nickname: summoner.name,
       level: summoner.summonerLevel,
       profileIcon: iconLink,
