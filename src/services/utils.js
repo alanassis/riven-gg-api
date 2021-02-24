@@ -1,13 +1,3 @@
-const { LolApi } = require("twisted");
-const lolApi = new LolApi(process.env.RIOT_KEY);
-
-function throwError(message, status) {
-  throw {
-    status: status || 0,
-    message,
-  };
-}
-
 module.exports = {
   async safeAsync(res, func) {
     try {
@@ -28,14 +18,10 @@ module.exports = {
     }
   },
 
-  async getSummonerId(nick, region) {
-    if (nick.length < 3 || nick.length > 16)
-      throwError("Nome de invocador inválido", 400);
-
-    const summoner = await lolApi.Summoner.getByName(nick, region);
-
-    return summoner.response;
+  throwError(message, status) {
+    throw {
+      status: status || 0,
+      message,
+    };
   },
-
-  throwError,
 };
