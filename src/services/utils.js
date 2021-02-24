@@ -10,13 +10,8 @@ module.exports = {
         message: error.message,
       };
 
-      switch (error.status) {
-        case 404:
-          errorMessage.message = "Invocador não encontrado";
-          break;
-        default:
-          errorMessage.message = "Serviço indisponível";
-          break;
+      if (error.message.includes("ENOTFOUND")) {
+        errorMessage.message = "Invocador não encontrado";
       }
 
       return res.status(400).json(errorMessage);
