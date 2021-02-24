@@ -1,5 +1,12 @@
 const { Constants } = require("twisted");
 
+function throwError(message, status) {
+  throw {
+    status: status || 0,
+    message,
+  };
+}
+
 module.exports = {
   async safeAsync(res, func) {
     try {
@@ -20,12 +27,7 @@ module.exports = {
     }
   },
 
-  throwError(message, status = "") {
-    throw {
-      status: status || 0,
-      message,
-    };
-  },
+  throwError,
 
   isNickValid(nick) {
     if (nick.length < 3 || nick.length > 16)
