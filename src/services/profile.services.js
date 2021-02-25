@@ -20,4 +20,10 @@ module.exports = {
       profileIcon: iconLink,
     };
   },
+
+  async getLeagueByNick(region, summonerId) {
+    const league = (await lolApi.League.bySummoner(summonerId, region))
+      .response;
+    return league;
+  },
 };

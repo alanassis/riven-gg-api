@@ -8,10 +8,8 @@ router.get("/", (req, res) => {
 
 // Routes
 const profileRoutes = require("./routes/profile.routes");
-const leagueRoutes = require("./routes/league.routes");
 
 router.use("/profile", profileRoutes);
-router.use("/league", leagueRoutes);
 
 // Export
 

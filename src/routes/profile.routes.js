@@ -18,4 +18,12 @@ routes.get("/:region/:nick", async (req, res) => {
   });
 });
 
+routes.get("/:region/:summonerId/league", async (req, res) => {
+  return await safeAsync(res, async () => {
+    return res.json(
+      await services.getLeagueByNick(req.params.region, req.params.summonerId)
+    );
+  });
+});
+
 module.exports = routes;
