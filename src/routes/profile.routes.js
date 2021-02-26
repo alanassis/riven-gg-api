@@ -18,10 +18,18 @@ routes.get("/:region/:nick", async (req, res) => {
   });
 });
 
-routes.get("/:region/:summonerId/league", async (req, res) => {
+routes.get("/:region/:summonerId/leagues", async (req, res) => {
   return await safeAsync(res, async () => {
     return res.json(
-      await services.getLeagueByNick(req.params.region, req.params.summonerId)
+      await services.getLeagues(req.params.region, req.params.summonerId)
+    );
+  });
+});
+
+routes.get("/:region/:accountId/matches", async (req, res) => {
+  return await safeAsync(res, async () => {
+    return res.json(
+      await services.getMatches(req.params.region, req.params.accountId)
     );
   });
 });
