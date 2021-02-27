@@ -1,3 +1,4 @@
+const { LolApi } = require("twisted");
 const router = require("express").Router();
 
 // Status
@@ -10,6 +11,17 @@ router.get("/", (req, res) => {
 const profileRoutes = require("./routes/profile.routes");
 
 router.use("/profile", profileRoutes);
+
+// Static Route
+
+router.get("/stats", async (req, res) => {
+  const lolApi = new LolApi(process.env.RIOT_KEY);
+  const versions = await lolApi.DataDragon.getVersions();
+
+  return res.json({
+    version: versions[0],
+  });
+});
 
 // Export
 
