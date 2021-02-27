@@ -24,4 +24,13 @@ module.exports = {
       message,
     };
   },
+
+  getPosition(lane, role) {
+    if (lane == "TOP" && role == "SOLO") return "TOP";
+    if (lane == "JUNGLE" && role == "NONE") return "JUNGLE";
+    if (lane == "MIDDLE" && role == "SOLO") return "MIDDLE";
+    if (lane == "BOTTOM" && role == "DUO_CARRY") return "BOTTOM";
+    if (lane == "BOTTOM" && role == "DUO_SUPPORT") return "UTILITY";
+    return "NONE";
+  },
 };
