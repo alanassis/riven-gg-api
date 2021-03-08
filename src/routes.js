@@ -15,7 +15,7 @@ router.use("/profile", profileRoutes);
 // Static Route
 
 router.get("/stats", async (req, res) => {
-  const lolApi = new LolApi(process.env.RIOT_KEY);
+  const lolApi = new LolApi();
   const versions = await lolApi.DataDragon.getVersions();
 
   return res.json({

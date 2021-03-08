@@ -1,6 +1,6 @@
 const { LolApi, Constants } = require("twisted");
 const { throwError, getPosition } = require("./utils");
-const lolApi = new LolApi(process.env.RIOT_KEY);
+const lolApi = new LolApi();
 
 module.exports = {
   async getByNick(region, nick) {
@@ -28,7 +28,6 @@ module.exports = {
   async getMatches(region, accountId) {
     const { response } = await lolApi.Match.list(accountId, region, {
       queue: [400, 420, 430, 440],
-      champion: Constants.Champions.RIVEN,
       endIndex: 10,
     });
 
